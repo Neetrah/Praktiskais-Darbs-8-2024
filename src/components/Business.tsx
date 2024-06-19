@@ -89,22 +89,24 @@ const Business: React.FC<Business> = ({
 
   return (
     <>
-      <div
-        className={`w-full gap-2 flex ${
-          called_at || picked_up || pitched || booked ? "p-2 pb-0" : ""
-        }`}
-      >
-        {called_at && (
-          <Badge color="green">
-            Called ({formatDate(new Date(called_at))})
-          </Badge>
-        )}
+      <div className="max-w-[10rem] overflow-visible">
+        <div
+          className={`w-full gap-2 flex ${
+            called_at || picked_up || pitched || booked ? "p-2 pb-0" : ""
+          }`}
+        >
+          {called_at && (
+            <Badge color="green">
+              Called ({formatDate(new Date(called_at))})
+            </Badge>
+          )}
 
-        {picked_up && <Badge color="blue">Answered</Badge>}
+          {picked_up && <Badge color="blue">Answered</Badge>}
 
-        {pitched && <Badge color="jade">Pitched</Badge>}
+          {pitched && <Badge color="jade">Pitched</Badge>}
 
-        {booked && <Badge color="ruby">Meeting Booked</Badge>}
+          {booked && <Badge color="ruby">Meeting Booked</Badge>}
+        </div>
       </div>
 
       <Table.Row className="group">
