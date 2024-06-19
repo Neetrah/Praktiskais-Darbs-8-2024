@@ -1,5 +1,6 @@
 import Businesses from "@/components/Businesses";
 import KPIS from "@/components/KPIS";
+import Nav from "@/components/Nav";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <section className="w-full h-full max-w-[80rem] p-20 flex flex-col gap-6">
+      <Nav />
+
       <KPIS />
 
       <Businesses />
