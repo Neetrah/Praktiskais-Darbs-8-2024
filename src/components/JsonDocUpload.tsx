@@ -37,6 +37,7 @@ const JsonDocUpload = () => {
           name="json"
           id="json"
           value={json}
+          autoComplete="off"
           placeholder="Ievadi json saturu šeit"
           className="bg-white rounded-lg h-12 px-2 w-full"
           onChange={(e) => setJson(e.target.value)}
