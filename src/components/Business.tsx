@@ -176,8 +176,8 @@ const Business: React.FC<Business> = ({
           </div>
         </Table.Cell>
 
-        <Table.RowHeaderCell>{business_name}</Table.RowHeaderCell>
-        <Table.Cell>{address}</Table.Cell>
+        <Table.RowHeaderCell minWidth="10rem">{business_name}</Table.RowHeaderCell>
+        <Table.Cell minWidth="10rem">{address}</Table.Cell>
         <Table.Cell minWidth="10rem">
           <Text as="p" color="blue" className="hover:underline">
             <a href={`tel:${phone_number}`}>{phone_number}</a>
