@@ -28,7 +28,6 @@ const JsonDocUpload = () => {
   return (
     <section className="w-full h-screen flex items-center justify-center">
       <form
-        action=""
         className="gap-2 flex w-full max-w-[40rem]"
         onSubmit={handleUpload}
       >

@@ -1,13 +1,26 @@
 "use client";
 
+import { formatDate } from "@/utils/formatDate";
 import {
   BanknotesIcon,
   EnvelopeIcon,
+  MicrophoneIcon,
+  PhoneArrowDownLeftIcon,
   PhoneIcon,
+  TrashIcon,
 } from "@heroicons/react/16/solid";
 import type { Business } from "@prisma/client";
-import { Button, Table, Text } from "@radix-ui/themes";
-import React from "react";
+import {
+  AlertDialog,
+  Badge,
+  Button,
+  Flex,
+  Table,
+  Text,
+} from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const Business: React.FC<Business> = ({
   address,
@@ -27,24 +40,137 @@ const Business: React.FC<Business> = ({
   pitched,
   website,
 }) => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleUpdate = async (data: {
+    called?: boolean;
+    picked_up?: boolean;
+    pitched?: boolean;
+    booked?: boolean;
+  }) => {
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+
+    await axios
+      .put(`/api/business/${id}`, data)
+      .then((res) => {
+        router.refresh();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    setLoading(false);
+  };
+
+  const handleDelete = async () => {
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+
+    await axios
+      .delete(`/api/business/${id}`)
+      .then((res) => {
+        router.refresh();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    setLoading(false);
+  };
+
   return (
     <>
-      <div className={`w-full gap-2`}></div>
+      <div
+        className={`w-full gap-2 flex ${
+          called_at || picked_up || pitched || booked ? "p-2 pb-0" : ""
+        }`}
+      >
+        {called_at && (
+          <Badge color="green">
+            Called ({formatDate(new Date(called_at))})
+          </Badge>
+        )}
+
+        {picked_up && <Badge color="blue">Answered</Badge>}
+
+        {pitched && <Badge color="jade">Pitched</Badge>}
+
+        {booked && <Badge color="ruby">Meeting Booked</Badge>}
+      </div>
 
       <Table.Row className="group">
         <Table.Cell p="2" py="3">
-          <div className="grid grid-cols-2 gap-1 w-full">
-            <button className="p-0 bg-green-400 flex items-center justify-center h-6 w-full rounded-sm">
+          <div className="grid grid-cols-2 gap-1 w-full max-w-[10rem]">
+            <button
+              className="p-0 bg-green-400 flex items-center justify-center h-6 w-full rounded-sm"
+              onClick={() => handleUpdate({ called: called_at ? false : true })}
+              disabled={loading}
+            >
               <PhoneIcon className="text-white h-4" />
             </button>
 
-            <button className="p-0 bg-blue-400 flex items-center justify-center h-6 w-full rounded-sm">
-              <EnvelopeIcon className="text-white h-4" />
+            <button
+              className="p-0 bg-sky-700 flex items-center justify-center h-6 w-full rounded-sm"
+              onClick={() => handleUpdate({ picked_up: !picked_up })}
+              disabled={loading}
+            >
+              <PhoneArrowDownLeftIcon className="text-white h-4" />
             </button>
 
-            <button className="p-0 bg-green-600 flex items-center justify-center h-6 w-full rounded-sm">
+            <button
+              className="p-0 bg-orange-500 flex items-center justify-center h-6 w-full rounded-sm"
+              onClick={() => handleUpdate({ pitched: !pitched })}
+              disabled={loading}
+            >
+              <MicrophoneIcon className="text-white h-4" />
+            </button>
+
+            <button
+              className="p-0 bg-purple-600 flex items-center justify-center h-6 w-full rounded-sm"
+              onClick={() => handleUpdate({ booked: !booked })}
+              disabled={loading}
+            >
               <BanknotesIcon className="text-white h-4" />
             </button>
+
+            <AlertDialog.Root>
+              <AlertDialog.Trigger>
+                <button
+                  className="p-0 bg-red-600 flex items-center justify-center h-6 w-full rounded-sm"
+                  disabled={loading}
+                >
+                  <TrashIcon className="text-white h-4" />
+                </button>
+              </AlertDialog.Trigger>
+              <AlertDialog.Content maxWidth="450px">
+                <AlertDialog.Title>Delete business</AlertDialog.Title>
+                <AlertDialog.Description size="2">
+                  Are you sure you want to delete this business?
+                </AlertDialog.Description>
+
+                <Flex gap="3" mt="4" justify="end">
+                  <AlertDialog.Cancel>
+                    <Button variant="soft" color="gray">
+                      Cancel
+                    </Button>
+                  </AlertDialog.Cancel>
+                  <AlertDialog.Action>
+                    <Button variant="solid" color="red" onClick={handleDelete}>
+                      Delete
+                    </Button>
+                  </AlertDialog.Action>
+                </Flex>
+              </AlertDialog.Content>
+            </AlertDialog.Root>
           </div>
         </Table.Cell>
 
