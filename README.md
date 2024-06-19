@@ -39,6 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Lapā localhost:3000/upload ievades laukā ievieto JSON tekstu, kurš ir ņemts no citas konkrētas lietotnes.
 JSON teksta piemērs, kuru var ievietot:
+```json
 [
     {
         "Business Name": "Fresh Group SIA",
@@ -93,11 +94,17 @@ JSON teksta piemērs, kuru var ievietot:
         "Contacted": ""
     }
 ]
-
+```
 
 Nospiežot "OK", dati tiek ievietotu datu bāzē.
 
+![image](https://github.com/Neetrah/Praktiskais-Darbs-8-2024/assets/92177273/2d5fe781-e7f7-40de-86da-40df6873af3f)
+
+
 Lapā localhost:3000 var redzēt visus ievietotos datus - informāciju par uzņēmumiem.
 Pie katra uzņēmuma ir piecas pogas. 1. atzīmē, ka uzņēmumam ir piezvanīts. 2. atzīmē, ka zvans tika arī pacelts. 3. atzīmē, ka uzņēmuma pārstāvis piektrīt uzklausīt produkta piedāvājumu. 4. atzīmē, ka uzņēmuma pārstāvis piekrīt uz attālinātu tikšanos. 5. dzēš uzņēmumu no saraksta.
+
+![image](https://github.com/Neetrah/Praktiskais-Darbs-8-2024/assets/92177273/c6f20a26-d79c-43d2-bca1-a43d97c9f3f5)
+
 
 Lapas augšējā labajā stūrī ir poga, kas ļauj lietotājam doties uz lapu localhost:3000/upload, kurā, kā minēts iepriekš, var ievietot jaunus datus datu bāzē.
