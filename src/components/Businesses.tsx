@@ -10,11 +10,11 @@ const Businesses = async () => {
 
   try {
     const { data } = await axios.get(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/business"
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/business`
     );
     businesses = data;
   } catch (err) {
-    return notFound();
+
   }
 
   return (
