@@ -1,7 +1,6 @@
 import type { Business } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 import axios from "axios";
-import { notFound } from "next/navigation";
 import React from "react";
 import BusinessComponent from "./Business";
 

@@ -14,6 +14,10 @@ export async function POST(request: NextRequest) {
   const { data }: { data: BusinessInfo[] } = body;
 
   for (const item of data) {
+    if(!item["Business Name"]){
+      continue;
+    }
+
     const existing = await prisma.business.findFirst({
       where: { business_name: item["Business Name"] },
     });
